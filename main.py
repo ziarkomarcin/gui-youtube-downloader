@@ -38,3 +38,8 @@ class App(customtkinter.CTk):
                 self.status_label.configure(text=f"Error: {str(e)}", text_color="red")
         else:
             self.status_label.configure(text="Please enter a valid URL.", text_color="red")
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
