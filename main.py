@@ -31,18 +31,13 @@ class App(customtkinter.CTk):
         url = self.url_entry.get()
         if url:
             try:
-                yt = YouTube(url)
-                stream = yt.streams.filter(progressive=True, file_extension='mp4').first()
-                if stream:
-                    stream.download()
-                    self.status_label.configure(text="Download completed!", text_color="green")
-                else:
-                    self.status_label.configure(text="No suitable stream found.", text_color="red")
+                # Uruchom yt-dlp jako moduł Pythona
+                subprocess.run(["python", "-m", "yt_dlp", url], check=True)
+                self.status_label.configure(text="Download completed!", text_color="green")
             except Exception as e:
                 self.status_label.configure(text=f"Error: {str(e)}", text_color="red")
         else:
             self.status_label.configure(text="Please enter a valid URL.", text_color="red")
-
 
 if __name__ == "__main__":
     app = App()
