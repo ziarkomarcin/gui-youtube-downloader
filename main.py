@@ -1,6 +1,7 @@
 import tkinter 
 from pytube import YouTube
 import customtkinter
+import subprocess
 
 customtkinter.set_appearance_mode("dark")  # Modes: "system" (default), "dark", "light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (default), "green", "dark-blue"
@@ -32,8 +33,11 @@ class App(customtkinter.CTk):
             try:
                 yt = YouTube(url)
                 stream = yt.streams.filter(progressive=True, file_extension='mp4').first()
-                stream.download()
-                self.status_label.configure(text="Download completed!", text_color="green")
+                if stream:
+                    stream.download()
+                    self.status_label.configure(text="Download completed!", text_color="green")
+                else:
+                    self.status_label.configure(text="No suitable stream found.", text_color="red")
             except Exception as e:
                 self.status_label.configure(text=f"Error: {str(e)}", text_color="red")
         else:
